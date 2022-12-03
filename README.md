@@ -11,9 +11,9 @@ python ./Functions/settings
 ```
 ### Notes:
 ```
-__DN.py__ : ADN with SMM
-__Generate.py__ : Samples consturcting
+DN.py : ADN with SMM
+Generate.py : Samples consturcting
 ```
 
 ## Contributors
-This project is contributed by [Peng Guo](https://github.com/GuoPP027),Guoqing Du,[Shijie Hong](https://github.com/Hshj13237)
+This project is contributed by [Peng Guo](https://github.com/GuoPP027),Guoqing Du,[Shijie Hong](https://github.com/Hshj13237).
