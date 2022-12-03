@@ -6,7 +6,9 @@ Numpy Implementation of paper: [__Multiscale face recognition in cluttered backg
 ### Dependencies:
 Numpy,Opencv
 ### Train:
-```python ./Functions/settings```
+```
+`python ./Functions/settings`
+```
 
 ## Contributors
 This project is contributed by [Peng Guo](https://github.com/GuoPP027)、Guoqing Du、[Shijie Hong](https://github.com/Hshj13237)
