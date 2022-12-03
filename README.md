@@ -4,15 +4,15 @@ Numpy Implementation of paper: [__Multiscale face recognition in cluttered backg
 
 ## Usage
 ### Dependencies:
-Numpy,Opencv
+Numpy, Opencv
 ### Train:
 ```
 python ./Functions/settings
 ```
 ### Notes:
 ```
-DN.py : ADN with SMM
-Generate.py : Samples consturcting
+__DN.py__ : ADN with SMM
+__Generate.py__ : Samples consturcting
 ```
 
 ## Contributors
