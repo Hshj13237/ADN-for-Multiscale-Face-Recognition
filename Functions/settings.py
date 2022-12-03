@@ -37,9 +37,14 @@ def openfile(logfile):
 logfile = '../Log/'
 saverFolder = '../Saver/'
 
+if os.path.exists(logfile) == False:
+    os.mkdir(logfile)
+if os.path.exists(saverFolder) == False:
+    os.mkdir(saverFolder)
+
 
 input_dim = [38, 38]
-z_neuron_num = [10, 11, 225]
+z_neuron_num = [10, 5, 225]
 y_neuron_num = 10000
 
 y_top_k = 1
@@ -48,12 +53,14 @@ dataSet = Generate.ImageGenerator()
 train_set, test_set = dataSet.generateDataSet()
 
 dn = DN.DN(input_dim, y_neuron_num, y_top_k, z_neuron_num, logfile, True, True)
-training_num = 20
+training_num = 10
 dl_train = DataLoader.DataLoader(train_set, False)
 dl_test = DataLoader.DataLoader(test_set, False)
 
+# dn.dn_set('../Saver/N2000_r_0/')
+
 for i in range(training_num):
-    saver = saverFolder + 'N2000_r_' + str(i)+'/'
+    saver = saverFolder + '1031_N2000_r_' + str(i)+'/'
     os.mkdir(saver)
     logger = saver + 'log'
     os.mkdir(logger)
@@ -64,11 +71,13 @@ for i in range(training_num):
         if len(data) == 0:
             break
         image = data['image']
-        image = image.reshape(1,-1)
-        image = image.reshape(38, 38)
+
+
         label = data['lable']
         type = label[0]
-        size = label[1]-24
+        # size = label[1]-24
+        size = (label[1] - 24) // 2
+
         location = label[2]
         where_loc = label[3]
 
@@ -77,7 +86,7 @@ for i in range(training_num):
         true_z = [type, size, location]
         true_z = np.array(true_z)
         mv, mi = dn.dn_learn(image, true_z, where_loc)
-        if count%10000 ==0:
+        if count%1000 ==0:
             print(count)
 
         # log(fe,ft,imgpath, classnum, location, mv, mi, True)
@@ -97,10 +106,12 @@ for i in range(training_num):
             break
         image = data['image']
         image = image.reshape(1, -1)
+
         image = image.reshape(38, 38)
+
         label = data['lable']
         type = label[0]
-        size = label[1]-24
+        size = (label[1]-24) // 2
         location = label[2]
         r = location // 15
         c = location % 15
@@ -122,7 +133,7 @@ for i in range(training_num):
 
         # if any(z_output!= true_z):
             # print(imgpath,z_output)
-    print(str(i) + " training, current performance: " + str(1.0 - error / total_num)+ '  '+ str(location_error) + ' ' + str(size_error_a)+ ' '+ str(size_error_r))
+    # print(str(i) + " training, current performance: " + str(1.0 - error / total_num)+ '  '+ str(location_error) + ' ' + str(size_error_a)+ ' '+ str(size_error_r))
     print(
         str(i) + " training, current performance: " + str(1.0 - error / total_num) + '  ' + str(
             location_error) + ' ' + str(size_error_a) + ' ' + str(size_error_r), file= fa)

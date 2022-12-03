@@ -80,11 +80,12 @@ class DN:
 
         self.log_t.info('DN creat complete')
 
+
     def preprocess(self, x):
-        x = x - np.mean(x)
+        x = x - np.mean(x)      # new_x_mean = 0
         max_val = np.max(x)
         min_val = np.min(x)
-        if (max_val - min_val) != 0:
+        if (max_val - min_val) != 0:        # min-max normalizaion
             x = (x - min_val) / (max_val - min_val)
         return x
 
@@ -283,60 +284,86 @@ class DN:
         # y_bottom_up weight:ybu.npy
         ybu = save_folder + 'ybu.npy'
         np.save(ybu, self.y_bottom_up_weight)
+
         # y_top_down weight:ytd.npy
-        # ytd = save_folder + 'ytd.npy'
+        ytd = save_folder + 'ytd.npz'
+        np.savez(ytd, self.y_top_down_weight[0], self.y_top_down_weight[1], self.y_top_down_weight[2])
         # np.save(ytd, self.y_top_down_weight)
+
         # y bottom up mask:bum.npy
         bum = save_folder + 'bum.npy'
         np.save(bum, self.bottom_up_mask)
+
         # y lsn flag: ylf.npy
         ylf = save_folder + 'ylf.npy'
         np.save(ylf, self.y_lsn_flag)
+
         # y set flag: ysf.npy
         ysf = save_folder + 'ysf.npy'
         np.save(ysf, self.set_flag)
+
         # y firing ege: yfa.npy
         yfa = save_folder + 'yfa.npy'
         np.save(yfa, self.y_firing_age)
+
         # z bottom up weight: zbu.npy
-        # zbu = save_folder + 'zbu.npy'
+        zbu = save_folder + 'zbu.npz'
+        np.savez(zbu, self.z_bottom_up_weight[0], self.z_bottom_up_weight[1], self.z_bottom_up_weight[2])
         # np.save(zbu, self.z_bottom_up_weight)
+
         # # z firing age: zfa.npy
-        # zfa = save_folder + 'zfa.npy'
+        zfa = save_folder + 'zfa.npz'
+        np.savez(zfa, self.z_firing_age[0], self.z_firing_age[1], self.z_firing_age[2])
         # np.save(zfa, self.z_firing_age)
+
         bus = save_folder + 'bus.npy'
         np.save(bus, self.bottom_up_factor)
 
         ####
-        print(np.sum(self.set_flag))
+        print('set flag: {}'.format(np.sum(self.set_flag)))
 
 
     def dn_set(self, set_folder):
         # y_bottom_up weight:ybu.npy
         ybu = set_folder + 'ybu.npy'
         self.y_bottom_up_weight = np.load(ybu)
+
         # y_top_down weight:ytd.npy
-        ytd = set_folder + 'ytd.npy'
-        self.y_top_down_weight = np.load(ytd)
+        ytd = set_folder + 'ytd.npz'
+        ytd_f = np.load(ytd)
+        for i in range(0,3):
+            self.y_top_down_weight[i] = ytd_f['arr_{}'.format(i)]
+
         # y bottom up mask:bum.npy
         bum = set_folder + 'bum.npy'
         self.bottom_up_mask = np.load(bum)
+
         # y lsn flag: ylf.npy
         ylf = set_folder + 'ylf.npy'
         self.y_lsn_flag = np.load(ylf)
+
         # y set flag: ysf.npy
         ysf = set_folder + 'ysf.npy'
         self.set_flag = np.load(ysf)
+
         # y firing ege: yfa.npy
         yfa = set_folder + 'yfa.npy'
         self.y_firing_age = np.load(yfa)
 
         # z bottom up weight: zbu.npy
-        zbu = set_folder + 'zbu.npy'
-        self.z_bottom_up_weight = np.load(zbu)
+        zbu = set_folder + 'zbu.npz'
+        zbu_f = np.load(zbu)
+        for i in range(0,3):
+            self.z_bottom_up_weight[i] = zbu_f['arr_{}'.format(i)]
+
         # z firing age: zfa.npy
-        zfa = set_folder + 'zfa.npy'
-        self.z_firing_age = np.load(zfa)
+        zfa = set_folder + 'zfa.npz'
+        zfa_f = np.load(zfa)
+        for i in range(0,3):
+            self.z_firing_age[i] = zfa_f['arr_{}'.format(i)]
+
+        bus = set_folder + 'bus.npy'
+        self.bottom_up_factor = np.load(bus)
 
     def dn_log(self, logfile):
         logger1 = logging.getLogger('a')

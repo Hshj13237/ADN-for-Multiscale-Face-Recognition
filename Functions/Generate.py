@@ -44,8 +44,10 @@ class ImageGenerator:
         :param mask: 112 x 92
         :return: 350p x 38x38
         '''
+
         dim = 38-fg_size
         result = np.zeros((dim-1, dim-1, 38*38))
+
         for i in range(1, dim):
             for j in range(1, dim):
                 fg = cv2.resize(fg, dsize=(fg_size, fg_size))
@@ -61,7 +63,9 @@ class ImageGenerator:
                 # output[i:i + height, j:j + width] = cv2.bitwise_or(
                 #     cv2.bitwise_and(output[i:i + height, j:j + width], mask_reverse),
                 #     cv2.bitwise_and(fg, mask))
+
                 output[i:i + height, j:j + width] = output[i:i + height, j:j + width] * mask_reverse+fg_temp*mask
+
                 # cv2.imwrite(r'C:\Users\Administrator\Desktop\Program_diff_Scales\ds\\'+str(fg_size)+'_'+str(i)+'_'+str(j)+'.jpg', output)
 
                 result[i-1][j-1] = output.reshape(1, -1)
@@ -82,7 +86,11 @@ class ImageGenerator:
                 # result['size_24'] = size_24
                 # result['size_29'] = size_29
                 # result['size_34'] = size_34
-                for t in range(24, 35):
+
+                # for t in range(24, 35):
+                for t in range(24, 33):
+                    if t % 2:
+                        continue
                     temp_var = 'size_'+str(t)
                     temp = self.generate(t, fg, mask)
                     result[temp_var] = temp
