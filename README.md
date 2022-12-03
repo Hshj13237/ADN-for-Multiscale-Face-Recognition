@@ -7,8 +7,13 @@ Numpy Implementation of paper: [__Multiscale face recognition in cluttered backg
 Numpy,Opencv
 ### Train:
 ```
-`python ./Functions/settings`
+python ./Functions/settings
+```
+### Notes:
+```
+__DN.py__ : ADN with SMM
+__Generate.py__ : Samples consturcting
 ```
 
 ## Contributors
-This project is contributed by [Peng Guo](https://github.com/GuoPP027)、Guoqing Du、[Shijie Hong](https://github.com/Hshj13237)
+This project is contributed by [Peng Guo](https://github.com/GuoPP027),Guoqing Du,[Shijie Hong](https://github.com/Hshj13237)
