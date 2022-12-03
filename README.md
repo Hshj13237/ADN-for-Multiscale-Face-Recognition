@@ -9,6 +9,4 @@ Numpy,Opencv
 `python ./Functions/settings`
 
 ## Contributors
-Peng Guo
-Guoqing Du
-[Shijie Hong]()
+This project is contributed by Peng Guo、Guoqing Du、[Shijie Hong]()
